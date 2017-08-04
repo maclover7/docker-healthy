@@ -4,18 +4,32 @@ require 'json'
 
 module Healthchecker
   class Application < Sinatra::Application
-    if ENV["BASIC_AUTH"] == "enabled"
-      use Rack::Auth::Basic, "Restricted Area" do |username, password|
-        username == ENV["BASIC_AUTH_USERNAME"] &&
-          password == ENV["BASIC_AUTH_PASSWORD"]
+    helpers do
+      def protected!
+        return if authorized?
+        headers['WWW-Authenticate'] = 'Basic realm="Restricted Area"'
+        halt 401, "Not authorized\n"
+      end
+
+      def authorized?
+        if ENV["BASIC_AUTH"] == "enabled"
+          @auth ||=  Rack::Auth::Basic::Request.new(request.env)
+          @auth.provided? and @auth.basic? and @auth.credentials and @auth.credentials == ['BASIC_AUTH_USERNAME', 'BASIC_AUTH_PASSWORD']
+        else
+          true
+        end
       end
     end
 
     get '/' do
+      protected!
+
       erb :index, locals: { services: containers }
     end
 
     get '/api' do
+      protected!
+
       json({
         services: containers
       })
