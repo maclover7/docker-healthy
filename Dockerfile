@@ -9,6 +9,6 @@ RUN bundle install --deployment --without development
 
 EXPOSE 9292
 
-HEALTHCHECK --interval=5s --timeout=3s CMD curl --fail http://localhost:9292/ping || exit 1
+HEALTHCHECK --interval=10s --timeout=3s CMD curl --fail http://localhost:9292/ping || exit 1
 
 CMD ["bundle", "exec", "foreman", "start", "-f", "Procfile"]
