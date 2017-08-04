@@ -19,7 +19,7 @@ Provides two interfaces for data collection:
 {
   "services": [
     {
-      "name":"docker-healthy"
+      "name":"docker-healthy",
       "status":"Up About a minute (healthy)"
     }
   ]
