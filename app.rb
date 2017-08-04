@@ -14,7 +14,7 @@ module Healthchecker
       def authorized?
         if ENV["BASIC_AUTH"] == "enabled"
           @auth ||=  Rack::Auth::Basic::Request.new(request.env)
-          @auth.provided? and @auth.basic? and @auth.credentials and @auth.credentials == ['BASIC_AUTH_USERNAME', 'BASIC_AUTH_PASSWORD']
+          @auth.provided? and @auth.basic? and @auth.credentials and @auth.credentials == [ENV['BASIC_AUTH_USERNAME'], ENV['BASIC_AUTH_PASSWORD']]
         else
           true
         end
