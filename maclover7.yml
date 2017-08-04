@@ -1,0 +1,5 @@
+name: docker-healthy
+port: 9292
+environment_variables: true
+volumes:
+  - '/var/run/docker.sock:/var/run/docker.sock'
