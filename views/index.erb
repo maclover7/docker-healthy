@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<head>
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <script src="http://code.jquery.com/jquery-3.2.1.min.js"></script>
+
+  <script>
+    $(document).ready(function() {
+      (function fetchServices() {
+        $.ajax({
+          url: '/api',
+          success: function(data) {
+            list = $('ul#services');
+
+            list.empty("li");
+
+            data.services.forEach(function(service) {
+              list.append(
+                "<li>" + service.name + " --> " + service.status + "</li>"
+              );
+            });
+          },
+          complete: function() {
+            // Schedule the next request when the current one's complete
+            setTimeout(fetchServices, 5000);
+          }
+        });
+      })();
+    });
+  </script>
+</head>
+
+<body>
+  <div class="container">
+    <h1>docker-healthy</h1>
+
+    <br>
+
+    <ul id="services"></ul>
+  </div>
+</body>
