@@ -26,6 +26,13 @@ Provides two interfaces for data collection:
 }
 ```
 
+There is also an option to enable basic authentication. If you wish to
+enable this feature, please define the following following environment
+variables:
+
+`BASIC_AUTH`: set to `enabled`
+`BASIC_AUTH_USERNAME`: set to user's username
+`BASIC_AUTH_PASSWORD`: set to user's password
 
 ### License
 
